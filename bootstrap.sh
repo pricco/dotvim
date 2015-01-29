@@ -3,8 +3,8 @@
 dotvim_dir="${HOME}/.dotvim"
 dotvim_git="https://github.com/pricco/dotvim.git"
 dotvim_branch="master"
-vundle_dir="${HOME}/.vim/bundle/vundle"
-vundle_uri="https://github.com/gmarik/vundle.git"
+vundle_dir="${HOME}/.vim/bundle/Vundle.vim"
+vundle_git="https://github.com/gmarik/Vundle.vim"
 vundle_branch="master"
 
 info () {
@@ -34,6 +34,7 @@ program_exists () {
 clone () {
   if [ ! -e "${1}" ]; then
     git clone -q --recursive "${2}" "${1}" &&
+    git checkout "${3}"
     cd "${1}" &&
     git submodule -q init &&
     git submodule -q update --init --recursive
@@ -140,11 +141,14 @@ setup_vundle() {
 }
 
 vim_install () {
-  program_exists "vim"
-  clone "${dotvim_dir}" "${dotvim_git}" "${dotvim_branch}"
-  clone "${vundle_dir}" "${vundle_git}" "${vundle_branch}"
-  local overwrite_all=false backup_all=false skip_all=false
-  link_file "${dotvim_dir}/.vimrc" "${HOME}/.vimrc"
+    program_exists "vim"
+    clone "${dotvim_dir}" "${dotvim_git}" "${dotvim_branch}"
+    if [ ! -d "${HOME}/.vim/bundle" ]; then
+        mkdir -p "${HOME}/.vim/bundle"
+    fi
+    clone "${vundle_dir}" "${vundle_git}" "${vundle_branch}"
+    local overwrite_all=false backup_all=false skip_all=false
+    link_file "${dotvim_dir}/.vimrc" "${HOME}/.vimrc"
 }
 
 vim_install
