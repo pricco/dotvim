@@ -22,7 +22,13 @@
     " http://github.com/gmarik/vundle
     Plugin 'gmarik/Vundle.vim'
 
-    Plugin 'pricco/vim-monokai'
+    if LINUX()
+        Plugin 'pricco/vim-monokai'
+    elseif OSX()
+        " Solarized theme
+        " Original 'altercation/vim-colors-solarized'
+        Plugin 'pricco/vim-colors-solarized'
+    endif
 
     " vim-airline: Lean & mean status/tabline for vim that's light as air.
     " https://github.com/bling/vim-airline
@@ -96,8 +102,8 @@
         imap <left> <nop>
         imap <right> <nop>
         nnoremap Q <nop>
-        noremap <Space> <Nop>
-        sunmap <Space>
+        noremap <space> <nop>
+        sunmap <space>
     " }
 
     " Behavior {
@@ -127,10 +133,63 @@
         set clipboard=
         set nojoinspaces                    " Prevents inserting two spaces after punctuation on a join (J)
         syntax enable
+
+        " Backups
+        set backup                          " Backups are nice ...
+        if has('persistent_undo')
+            set undofile                    " So is persistent undo ...
+            set undolevels=1000             " Maximum number of changes that can be undone
+            set undoreload=10000            " Maximum number lines to save for undo on a buffer reload
+        endif
+
+        " Initialize directories {
+            " Copy from https://github.com/spf13/spf13-vim/blob/3.0/.vimrc#L1041
+            function! InitializeDirectories()
+                let prefix = 'vim'
+                let common_dir = $HOME . '/.vim/.' . prefix
+                let dir_list = {
+                            \ 'backup': 'backupdir',
+                            \ 'views': 'viewdir',
+                            \ 'swap': 'directory' }
+
+                if has('persistent_undo')
+                    let dir_list['undo'] = 'undodir'
+                endif
+
+                for [dirname, settingname] in items(dir_list)
+                    let directory = common_dir . dirname . '/'
+                    if exists("*mkdir")
+                        if !isdirectory(directory)
+                            call mkdir(directory)
+                        endif
+                    endif
+                    if !isdirectory(directory)
+                        echo "Warning: Unable to create backup directory: " . directory
+                        echo "Try: mkdir -p " . directory
+                    else
+                        let directory = substitute(directory, " ", "\\\\ ", "g")
+                        exec "set " . settingname . "=" . directory
+                    endif
+                endfor
+            endfunction
+            call InitializeDirectories()
+        " }
     " }
 
     " UI {
-        colorscheme monokai                 " Set color theme
+        if LINUX()
+            set background=dark
+            colorscheme monokai
+        elseif OSX()
+            set background=dark
+            let g:solarized_underline=0
+            let g:solarized_bold=0
+            let g:solarized_italic=0
+            let g:solarized_contrast='normal'
+            let g:solarized_visibility='normal'
+            colorscheme solarized
+        endif
+
         set nowrap                          " Do not wrap long lines
         set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
         set showbreak=↪                     " String to put at the start of lines that have been wrapped.
@@ -173,7 +232,7 @@
     " }
 
     " Keys {
-    "
+
         " Wrapped lines goes down/up to next row, rather than next line in file.
         noremap j gj
         noremap k gk
@@ -242,7 +301,10 @@
         nmap <Leader>f9 :set foldlevel=9<CR>
 
         " Quick save
-        nmap <Leader>w :w!<CR>
+        nmap <leader>w :w!<CR>
+
+        " Find merge conflict markers
+        map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 
         " Visual shifting (does not exit Visual mode)
         vnoremap < <gv
@@ -270,7 +332,7 @@
         map q: :q
 
     " }
-    "
+
     " Tabs {
         set showtabline=2
         if exists("+showtabline")
@@ -338,7 +400,11 @@
 
 " airline {
     set laststatus=2
-    let g:airline_theme = 'monokai'
+    if LINUX()
+        let g:airline_theme = 'monokai'
+    elseif OSX()
+        let g:airline_theme = 'solarized'
+    endif
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tmuxline#enabled = 0
     let g:airline#extensions#tabline#enabled = 0
@@ -387,8 +453,10 @@
 
 " }
 
+" Ack {
     noremap <C-f> :Ack<space>
     let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+" }
 
 " Local Vimrc {
     let g:localvimrc_whitelist = '/home/pricco/sophilabs/.*'
@@ -431,7 +499,7 @@
 
 " Tagbar {
     nnoremap <silent> <Leader>tt :TagbarToggle<CR>
-    let g:tagbar_compact = 1
+    let g:tagbar_compact = 2
     let g:tagbar_autofocus = 1
     " If using go please install the gotags program using the following
     " go install github.com/jstemmer/gotags
@@ -474,7 +542,11 @@
 
 " Tmuxline {
     " .tmux.monokai.conf configuration
-    let g:tmuxline_theme = 'monokai'
+    if LINUX()
+        let g:tmuxline_theme = 'monokai'
+    elseif LINUX()
+        let g:tmuxline_theme = 'solarized'
+    endif
     let g:tmuxline_preset = {
           \ 'a'    : '#S',
           \ 'win'  : '#W',
