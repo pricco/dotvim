@@ -88,6 +88,8 @@
 
     Plugin 'klen/python-mode'
 
+    Plugin 'rizzatti/dash.vim'
+
     call vundle#end()
     filetype plugin indent on
 " }
@@ -285,7 +287,6 @@
 
         " Paste
         vmap <Leader>y "*y
-        vmap <Leader>d "*d
         nmap <Leader>p "*p
         nmap <Leader>P "*P
         vmap <Leader>p "*p
@@ -565,6 +566,10 @@
     let g:signify_sign_change = '!'
     let g:signify_sign_changedelete = '!'
     let g:signify_sign_show_count = 0
+" }
+
+" Dash {
+    nmap <silent> <leader>d <Plug>DashSearch
 " }
 
 " Tmuxline {
