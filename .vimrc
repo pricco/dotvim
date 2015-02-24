@@ -86,6 +86,8 @@
 
     Plugin 'mhinz/vim-signify'
 
+    Plugin 'klen/python-mode'
+
     call vundle#end()
     filetype plugin indent on
 " }
@@ -133,6 +135,7 @@
         set clipboard=
         set nojoinspaces                    " Prevents inserting two spaces after punctuation on a join (J)
         syntax enable
+        set foldlevelstart=0
 
         " Backups
         set backup                          " Backups are nice ...
@@ -470,12 +473,36 @@
     let g:syntastic_enable_highlighting = 0
     let g:syntastic_cursor_column = 0
     let g:syntastic_enable_highlighting = 0
+    let g:syntastic_python_checkers = ['flake8']
     nnoremap <leader>l :SyntasticCheck<CR>
 " }
 
+" PythonMode  {
+    let g:pymode = 1
+    let g:pymode_trim_whitespaces = 1
+    let g:pymode_options_max_line_length = 79
+    let g:pymode_options_colorcolumn = 1
+    let g:pymode_indent = 1
+    let g:pymode_folding = 1
+    let g:pymode_syntax = 1
+    let g:pymode_motion = 0
+    let g:pymode_doc = 0
+    let g:pymode_virtualenv = 0
+    let g:pymode_run = 0
+    let g:pymode_breakpoint = 1
+    let g:pymode_breakpoint_bind = '<leader>b'
+    let g:pymode_lint = 0
+    let g:pymode_rope = 0
+    let g:pymode_syntax_slow_sync = 0
+    let g:pymode_syntax_all = 1
+" }
+
 " Indent Guides {
+    let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_default_mapping = 0
-    let g:indent_guides_auto_colors  =  0
+    let g:indent_guides_auto_colors  =  1
+    let g:indent_guides_guide_size = 1
+    let g:indent_guides_start_level = 2
     let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
     nmap <silent> <Leader>ig <Plug>IndentGuidesToggle
 " }
@@ -533,11 +560,11 @@
 " }
 
 " Signify {
-        let g:signify_sign_add = '+'
-        let g:signify_sign_delete_first_line = '-'
-        let g:signify_sign_change = '!'
-        let g:signify_sign_changedelete = '!'
-        let g:signify_sign_show_count = 0
+    let g:signify_sign_add = '+'
+    let g:signify_sign_delete_first_line = '-'
+    let g:signify_sign_change = '!'
+    let g:signify_sign_changedelete = '!'
+    let g:signify_sign_show_count = 0
 " }
 
 " Tmuxline {
