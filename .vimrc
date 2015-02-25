@@ -71,8 +71,12 @@
     Plugin 'scrooloose/syntastic'
 
     Plugin 'tpope/vim-fugitive'
-    "
+
     Plugin 'majutsushi/tagbar'
+
+    Plugin 'pangloss/vim-javascript'
+
+    Plugin 'tpope/vim-haml'
 
     Plugin 'jby/tmux.vim'
 
@@ -116,7 +120,7 @@
         set fileformats=unix,dos,mac        " This gives the end-of-line (<EOL>) formats that will be tried when starting to edit
         let mapleader = "\<Space>"          " To define a mapping which uses the mapleader variable, the special string <Leader> can be used.
         set shell=/bin/sh
-        set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
+        set shortmess+=filmnrxoOtTI         " Abbrev. of messages (avoids 'hit enter')
         set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
         set virtualedit=onemore             " Allow for cursor beyond last character
         set history=1000                    " Store a ton of history (default is 20)
@@ -507,8 +511,9 @@
     let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
     nmap <silent> <Leader>ig <Plug>IndentGuidesToggle
     if OSX()
-        hi IndentGuidesOdd   ctermbg=0
-        hi IndentGuidesEven   ctermbg=0
+        highlight IndentGuidesOdd ctermbg=0
+        highlight IndentGuidesEven ctermbg=0
+        highlight NonText ctermfg=8 guifg=8
     endif
 " }
 
