@@ -94,6 +94,8 @@
 
     Plugin 'rizzatti/dash.vim'
 
+    Plugin 'digitaltoad/vim-jade'
+
     call vundle#end()
     filetype plugin indent on
 " }
@@ -479,6 +481,7 @@
     let g:syntastic_cursor_column = 0
     let g:syntastic_enable_highlighting = 0
     let g:syntastic_python_checkers = ['flake8']
+    let g:syntastic_scss_checkers = []
     nnoremap <leader>l :SyntasticCheck<CR>
 " }
 
