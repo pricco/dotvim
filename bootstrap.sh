@@ -141,14 +141,26 @@ setup_vundle() {
 }
 
 vim_install () {
-    program_exists "vim"
+    program_exists "git"
     clone "${dotvim_dir}" "${dotvim_git}" "${dotvim_branch}"
+    # Vim
+    program_exists "vim"
     if [ ! -d "${HOME}/.vim/bundle" ]; then
         mkdir -p "${HOME}/.vim/bundle"
     fi
     clone "${vundle_dir}" "${vundle_git}" "${vundle_branch}"
     local overwrite_all=false backup_all=false skip_all=false
     link_file "${dotvim_dir}/.vimrc" "${HOME}/.vimrc"
+    #NVim
+    program_exists "curl"
+    program_exists "nvim"
+    if [ ! -d "${HOME}/.nvim/autoload" ]; then
+        mkdir -p "${HOME}/.nvim/autoload"
+    fi
+    curl -sfLo ~/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    info $? "Updated plug.vim"
+    local overwrite_all=false backup_all=false skip_all=false
+    link_file "${dotvim_dir}/.nvimrc" "${HOME}/.nvimrc"
 }
 
 vim_install
