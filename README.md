@@ -1,0 +1,1 @@
+# Vim and NeoVim configuration
