@@ -60,11 +60,12 @@
 
     Plug 'edkolev/tmuxline.vim'
 
-    Plug 'scrooloose/syntastic'
+    " Plug 'scrooloose/syntastic'
+    Plug 'benekastah/neomake'
 
     Plug 'tpope/vim-fugitive'
 
-    Plug 'majutsushi/tagbar'
+    " Plug 'majutsushi/tagbar'
 
     Plug 'pangloss/vim-javascript'
 
@@ -402,11 +403,7 @@
 
 " airline {
     set laststatus=2
-    if LINUX()
-        let g:airline_theme = 'monokai'
-    elseif OSX()
-        let g:airline_theme = 'solarized'
-    endif
+    let g:airline_theme = 'solarized'
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tmuxline#enabled = 0
     let g:airline#extensions#tabline#enabled = 0
@@ -440,8 +437,6 @@
 
  " NerdTree {
     nmap <leader>nt :NERDTreeToggle<CR>
-    vmap <leader>nt :NERDTreeToggle<CR>
-    nmap <leader>nf :NERDTreeFind<CR>
     vmap <leader>nf :NERDTreeFind<CR>
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeMinimalUI = 1
@@ -461,21 +456,13 @@
 " }
 
 " Local Vimrc {
-    " TODO: Get from variable
-    let g:localvimrc_whitelist = '/home/pricco/sophilabs/.*'
+    let g:localvimrc_whitelist = '*/pricco/projects/.*'
     let g:localvimrc_sandbox = 0
 " }
 
-" Syntastic {
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_error_symbol = "✗"
-    let g:syntastic_warning_symbol = "⚠"
-    let g:syntastic_enable_highlighting = 0
-    let g:syntastic_cursor_column = 0
-    let g:syntastic_enable_highlighting = 0
-    let g:syntastic_python_checkers = ['flake8']
-    let g:syntastic_scss_checkers = []
-    nnoremap <leader>l :SyntasticCheck<CR>
+" Neomake {
+    nnoremap <leader>l :Neomake<CR>
+    autocmd! BufWritePost * Neomake
 " }
 
 " PythonMode  {
@@ -506,11 +493,9 @@
     let g:indent_guides_start_level = 2
     let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
     nmap <silent> <Leader>ig <Plug>IndentGuidesToggle
-    if OSX()
-        highlight IndentGuidesOdd ctermbg=0
-        highlight IndentGuidesEven ctermbg=0
-        highlight NonText ctermfg=8 guifg=8
-    endif
+    highlight IndentGuidesOdd ctermbg=0
+    highlight IndentGuidesEven ctermbg=0
+    highlight NonText ctermfg=8 guifg=8
 " }
 
 " EasyMotion {
