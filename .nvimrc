@@ -383,7 +383,7 @@
         map <silent> <F13> call system('tmux switch-client -n')
         map! <silent> <F13> call system('tmux switch-client -n')
         " Switch Window
-        set <F15>=w
+        set <F14>=w
         map <silent> <F14> call system('tmux select-window -t :+')
         map! <silent> <F14> call system('tmux select-window -t :+')
         " Switch Pane
