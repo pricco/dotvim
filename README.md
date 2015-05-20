@@ -6,5 +6,5 @@
 To install these dotfiles:
 
 ```bash
-sh -c "`curl -fsSL https://raw.github.com/pricco/dotfiles/master/bootstrap.sh`"
+sh -c "`curl -fsSL https://raw.github.com/pricco/dotvim/master/bootstrap.sh`"
 ```
