@@ -65,7 +65,7 @@
 
     Plug 'tpope/vim-fugitive'
 
-    " Plug 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
 
     Plug 'pangloss/vim-javascript'
 
@@ -88,6 +88,10 @@
     Plug 'rizzatti/dash.vim'
 
     Plug 'digitaltoad/vim-jade'
+
+    Plug 'ntpeters/vim-airline-colornum'
+
+    Plug 'Shougo/deoplete.nvim'
 
     call plug#end()
     filetype plugin indent on
@@ -376,28 +380,37 @@
     " }
 
     " Windows, Panes, Tabs and Splits {
-        " Avoid <Esc> wait
-        " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim#2b._Mapping_.22fast.22_keycodes
-        " Switch Session
-        set <F13>=c
-        map <silent> <F13> call system('tmux switch-client -n')
-        map! <silent> <F13> call system('tmux switch-client -n')
-        " Switch Window
-        set <F14>=w
-        map <silent> <F14> call system('tmux select-window -t :+')
-        map! <silent> <F14> call system('tmux select-window -t :+')
-        " Switch Pane
-        set <F15>=p
-        map <silent> <F15> call system('tmux select-pane -t :.+')
-        map! <silent> <F15> call system('tmux select-pane -t :.+')
-        " Switch Tab
-        set <F16>=t
-        map <F16> :tabnext<CR>
-        map! t <Esc>:tabnext<CR>
-        " Switch Split
-        set <F17>=s
-        map <F17> :wincmd w<CR>
-        map! <F17> <Esc>:wincmd w<CR>
+        if has("nvim")
+            " Switch Tab
+            map ô :tabnext<CR>
+            map! ô <Esc>:tabnext<CR>
+            " Switch Split
+            map ó :wincmd w<CR>
+            map! ó <Esc>:wincmd w<CR>
+        else
+            " Avoid <Esc> wait
+            " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim#2b._Mapping_.22fast.22_keycodes
+            " Switch Session
+            set <F13>=c
+            map <silent> <F13> call system('tmux switch-client -n')
+            map! <silent> <F13> call system('tmux switch-client -n')
+            " Switch Window
+            set <F14>=w
+            map <silent> <F14> call system('tmux select-window -t :+')
+            map! <silent> <F14> call system('tmux select-window -t :+')
+            " Switch Pane
+            set <F15>=p
+            map <silent> <F15> call system('tmux select-pane -t :.+')
+            map! <silent> <F15> call system('tmux select-pane -t :.+')
+            " Switch Tab
+            set <F16>=t
+            map <F16> :tabnext<CR>
+            map! t <Esc>:tabnext<CR>
+            " Switch Split
+            set <F17>=s
+            map <F17> :wincmd w<CR>
+            map! <F17> <Esc>:wincmd w<CR>
+        endif
     " }
 " }
 
@@ -456,7 +469,7 @@
 " }
 
 " Local Vimrc {
-    let g:localvimrc_whitelist = '*/pricco/projects/.*'
+    let g:localvimrc_whitelist = '/Users/pricco/projects/.*'
     let g:localvimrc_sandbox = 0
 " }
 
@@ -564,11 +577,7 @@
 
 " Tmuxline {
     " .tmux.monokai.conf configuration
-    if LINUX()
-        let g:tmuxline_theme = 'monokai'
-    elseif LINUX()
-        let g:tmuxline_theme = 'solarized'
-    endif
+    let g:tmuxline_theme = 'solarized'
     let g:tmuxline_preset = {
           \ 'a'    : '#S',
           \ 'win'  : '#W',
