@@ -451,6 +451,7 @@
  " NerdTree {
     nmap <leader>nt :NERDTreeToggle<CR>
     vmap <leader>nf :NERDTreeFind<CR>
+    nmap <leader>nf :NERDTreeFind<CR>
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeMinimalUI = 1
     let g:NERDTreeWinSize = 26
@@ -586,4 +587,8 @@
           \ 'y'    : '%Y-%m-%d %H:%M',
           \ 'z'    : '#H '
           \ }
+" }
+
+" Deoplete {
+    let g:deoplete#enable_at_startup = 0
 " }
