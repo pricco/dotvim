@@ -89,6 +89,8 @@
 
     Plug 'digitaltoad/vim-jade'
 
+    Plug 'fatih/vim-go'
+
     Plug 'ntpeters/vim-airline-colornum'
 
     Plug 'Shougo/deoplete.nvim'
@@ -245,7 +247,7 @@
         noremap j gj
         noremap k gk
 
-         " Visual Search {
+        " Visual Search {
 
             function! CmdLine(str)
                 exe "menu Foo.Bar :" . a:str
@@ -475,6 +477,7 @@
 " }
 
 " Neomake {
+    let g:neomake_open_list=1
     nnoremap <leader>l :Neomake<CR>
     autocmd! BufWritePost * Neomake
 " }
@@ -591,4 +594,8 @@
 
 " Deoplete {
     let g:deoplete#enable_at_startup = 0
+" }
+
+" Numbers {
+    let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 " }
