@@ -1,3 +1,4 @@
+
 " .nvimrc {
 " vim: set sw=4 ts=4 sts=4 et foldmarker={,} foldlevel=1 foldmethod=marker nospell:
 " }
@@ -18,13 +19,21 @@
     " Set the runtime path to include Plug and initialize
     call plug#begin('~/.nvim/plugged')
 
+    Plug 'metakirby5/codi.vim'
+
+    Plug 'elixir-lang/vim-elixir'
+
     " Solarized theme
     " Original 'altercation/vim-colors-solarized'
     Plug 'pricco/vim-colors-solarized'
 
     " vim-airline: Lean & mean status/tabline for vim that's light as air.
-    " https://github.com/bling/vim-airline
-    Plug 'bling/vim-airline'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    Plug 'dhruvasagar/vim-table-mode'
+
+    Plug 'chrisbra/csv.vim'
 
     " Active fork of kien/ctrlp.vim—Fuzzy file, buffer, mru, tag, etc finder.
     " https://github.com/ctrlpvim/ctrlp.vim
@@ -67,8 +76,8 @@
 
     Plug 'majutsushi/tagbar'
 
-    Plug 'pangloss/vim-javascript'
-
+    " Plug 'pangloss/vim-javascript'
+    " Plug 'cakebaker/scss-syntax.vim'
     Plug 'tpope/vim-haml'
 
     Plug 'jby/tmux.vim'
@@ -83,17 +92,26 @@
 
     Plug 'mhinz/vim-signify'
 
-    Plug 'klen/python-mode'
-
-    Plug 'rizzatti/dash.vim'
+    Plug 'klen/python-mode', { 'branch': 'develop' }
 
     Plug 'digitaltoad/vim-jade'
 
     Plug 'fatih/vim-go'
 
+    " Set colornum based on mode
     Plug 'ntpeters/vim-airline-colornum'
 
-    Plug 'Shougo/deoplete.nvim'
+    " Plug 'Shougo/deoplete.nvim'
+    " Plug 'Valloric/YouCompleteMe', {'do': './install.py'}`
+
+    " Distraction-free writing in Vim.
+    Plug 'junegunn/goyo.vim'
+
+    Plug 'szw/vim-ctrlspace'
+
+    Plug 'junegunn/vim-emoji'
+
+    Plug 'wesQ3/vim-windowswap'
 
     call plug#end()
     filetype plugin indent on
@@ -382,37 +400,12 @@
     " }
 
     " Windows, Panes, Tabs and Splits {
-        if has("nvim")
             " Switch Tab
-            map ô :tabnext<CR>
-            map! ô <Esc>:tabnext<CR>
-            " Switch Split
-            map ó :wincmd w<CR>
-            map! ó <Esc>:wincmd w<CR>
-        else
-            " Avoid <Esc> wait
-            " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim#2b._Mapping_.22fast.22_keycodes
-            " Switch Session
-            set <F13>=c
-            map <silent> <F13> call system('tmux switch-client -n')
-            map! <silent> <F13> call system('tmux switch-client -n')
-            " Switch Window
-            set <F14>=w
-            map <silent> <F14> call system('tmux select-window -t :+')
-            map! <silent> <F14> call system('tmux select-window -t :+')
-            " Switch Pane
-            set <F15>=p
-            map <silent> <F15> call system('tmux select-pane -t :.+')
-            map! <silent> <F15> call system('tmux select-pane -t :.+')
-            " Switch Tab
-            set <F16>=t
-            map <F16> :tabnext<CR>
-            map! t <Esc>:tabnext<CR>
-            " Switch Split
-            set <F17>=s
-            map <F17> :wincmd w<CR>
-            map! <F17> <Esc>:wincmd w<CR>
-        endif
+        map <C-t> :tabnext<CR>
+        map! <C-t> <Esc>:tabnext<CR>
+        " Switch Split
+        map <C-s> :wincmd w<CR>
+        map! <C-s> <Esc>:wincmd w<CR>
     " }
 " }
 
@@ -426,6 +419,7 @@
 " }
 
 " CtrlP {
+    let g:ctrlp_regexp = 1
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_clear_cache_on_exit = 0
     let g:ctrlp_custom_ignore = {
@@ -480,26 +474,35 @@
     let g:neomake_open_list=1
     nnoremap <leader>l :Neomake<CR>
     autocmd! BufWritePost * Neomake
+    " g:neomake_error_sign* *g:neomake_warning_sign*
+    " silent! if emoji#available()
+    "     let g:neomake_error_sign = {
+    "         \ 'text': emoji#for('warning'),
+    "         \ }
+    " endif
+    " let g:neomake_error_sign = {'text': '🔴'}
+    " let g:neomake_warning_sign = {'text': '⚠️'}
 " }
 
 " PythonMode  {
     let g:pymode = 1
-    let g:pymode_trim_whitespaces = 1
+    let g:pymode_trim_whitespaces = 0
+    let g:pymode_options_colorcolumn = 0
     let g:pymode_options_max_line_length = 79
-    let g:pymode_options_colorcolumn = 1
     let g:pymode_indent = 1
     let g:pymode_folding = 1
-    let g:pymode_syntax = 1
     let g:pymode_motion = 0
     let g:pymode_doc = 0
     let g:pymode_virtualenv = 0
-    let g:pymode_run = 0
     let g:pymode_breakpoint = 1
     let g:pymode_breakpoint_bind = '<leader>b'
+    let g:pymode_run = 0
     let g:pymode_lint = 0
     let g:pymode_rope = 0
-    let g:pymode_syntax_slow_sync = 0
+    let g:pymode_syntax = 1
+    let g:pymode_syntax_slow_sync = 1
     let g:pymode_syntax_all = 1
+    autocmd FileType python let &colorcolumn=join(range(80,999),",")
 " }
 
 " Indent Guides {
@@ -573,6 +576,13 @@
     let g:signify_sign_change = '!'
     let g:signify_sign_changedelete = '!'
     let g:signify_sign_show_count = 0
+
+    " silent! if emoji#available()
+    "     let g:signify_sign_add = emoji#for('small_blue_diamond')
+    "     let g:signify_sign_delete_first_line = emoji#for('small_orange_diamond')
+    "     let g:signify_sign_change = emoji#for('small_orange_diamond')
+    "     let g:signify_sign_changedelete = emoji#for('collision')
+    " endif
 " }
 
 " Dash {
@@ -598,4 +608,11 @@
 
 " Numbers {
     let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
+"  }
+
+" WindowSwap {
+    let g:windowswap_map_keys = 0 "prevent default bindings
+    " nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
+    " nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
+    nnoremap <silent> <leader>mw :call WindowSwap#EasyWindowSwap()<CR>
 " }

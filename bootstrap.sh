@@ -3,9 +3,6 @@
 dotvim_dir="${HOME}/.dotvim"
 dotvim_git="https://github.com/pricco/dotvim.git"
 dotvim_branch="master"
-vundle_dir="${HOME}/.vim/bundle/Vundle.vim"
-vundle_git="https://github.com/gmarik/Vundle.vim"
-vundle_branch="master"
 
 info () {
   if [ "${1}" -eq '0' ]; then
@@ -123,23 +120,6 @@ link_file () {
   fi
 }
 
-setup_vundle() {
-    system_shell="$SHELL"
-    export SHELL='/bin/sh'
-
-    vim \
-        -u "$app_dir/.vimrc.bundles.default" \
-        "+set nomore" \
-        "+BundleInstall!" \
-        "+BundleClean" \
-        "+qall"
-
-    export SHELL="$system_shell"
-
-    success "$1"
-    debug
-}
-
 vim_install () {
     program_exists "git"
     clone "${dotvim_dir}" "${dotvim_git}" "${dotvim_branch}"
@@ -148,19 +128,19 @@ vim_install () {
     if [ ! -d "${HOME}/.vim/bundle" ]; then
         mkdir -p "${HOME}/.vim/bundle"
     fi
-    clone "${vundle_dir}" "${vundle_git}" "${vundle_branch}"
     local overwrite_all=false backup_all=false skip_all=false
     link_file "${dotvim_dir}/.vimrc" "${HOME}/.vimrc"
+
     #NVim
     program_exists "curl"
     program_exists "nvim"
-    if [ ! -d "${HOME}/.nvim/autoload" ]; then
-        mkdir -p "${HOME}/.nvim/autoload"
+    if [ ! -d "${HOME}/.config/nvim/autoload" ]; then
+        mkdir -p "${HOME}/.config/nvim/autoload"
     fi
-    curl -sfLo ~/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    curl -sfLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     info $? "Updated plug.vim"
     local overwrite_all=false backup_all=false skip_all=false
-    link_file "${dotvim_dir}/.nvimrc" "${HOME}/.nvimrc"
+    link_file "${dotvim_dir}/.nvimrc" "${HOME}/.config/nvim/init.vim"
 }
 
 vim_install
