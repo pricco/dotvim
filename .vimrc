@@ -1,5 +1,5 @@
 
-" .nvimrc {
+" .vimrc {
 " vim: set sw=4 ts=4 sts=4 et foldmarker={,} foldlevel=1 foldmethod=marker nospell:
 " }
 
@@ -17,23 +17,42 @@
     filetype off
 
     " Set the runtime path to include Plug and initialize
-    call plug#begin('~/.nvim/plugged')
+    call plug#begin('~/.vim/plugged')
 
-    Plug 'metakirby5/codi.vim'
+    " Performance?
+    " Plug 'metakirby5/codi.vim'
 
-    Plug 'elixir-lang/vim-elixir'
 
-    " Solarized theme
     " Original 'altercation/vim-colors-solarized'
     Plug 'pricco/vim-colors-solarized'
 
-    " vim-airline: Lean & mean status/tabline for vim that's light as air.
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    Plug 'dhruvasagar/vim-table-mode'
+    Plug 'jby/tmux.vim'
 
-    Plug 'chrisbra/csv.vim'
+    Plug 'tpope/vim-git'
+
+    Plug 'tacahiroy/ctrlp-funky'
+
+    Plug 'kristijanhusak/vim-multiple-cursors'
+
+    " SLOW?
+    " Plug 'nathanaelkane/vim-indent-guides'
+
+    Plug 'mhinz/vim-signify'
+
+    Plug 'klen/python-mode', { 'branch': 'develop' }
+
+    Plug 'ntpeters/vim-airline-colornum'
+
+    Plug 'szw/vim-ctrlspace'
+
+    Plug 'elixir-lang/vim-elixir'
+
+    " Performance?
+    " Plug 'dhruvasagar/vim-table-mode'
+    " Plug 'chrisbra/csv.vim'
 
     " Active fork of kien/ctrlp.vim—Fuzzy file, buffer, mru, tag, etc finder.
     " https://github.com/ctrlpvim/ctrlp.vim
@@ -49,7 +68,8 @@
 
     " Numbers.vim is a plugin for intelligently toggling line numbers.
     " https://github.com/myusuf3/numbers.vim
-    Plug 'myusuf3/numbers.vim'
+    " SLOW?
+    " Plug 'myusuf3/numbers.vim'
 
     " A tree explorer plugin for vim.
     " https://github.com/scrooloose/nerdtree
@@ -67,51 +87,34 @@
     " https://github.com/Xuyuanp/nerdtree-git-plugin
     Plug 'Xuyuanp/nerdtree-git-plugin'
 
-    Plug 'edkolev/tmuxline.vim'
+    " Plug 'edkolev/tmuxline.vim'
 
     " Plug 'scrooloose/syntastic'
     Plug 'benekastah/neomake'
 
     Plug 'tpope/vim-fugitive'
 
-    Plug 'majutsushi/tagbar'
-
+    " Plug 'majutsushi/tagbar'
     " Plug 'pangloss/vim-javascript'
     " Plug 'cakebaker/scss-syntax.vim'
-    Plug 'tpope/vim-haml'
+    " Plug 'tpope/vim-haml'
 
-    Plug 'jby/tmux.vim'
 
-    Plug 'tpope/vim-git'
+    " Plug 'digitaltoad/vim-jade'
 
-    Plug 'tacahiroy/ctrlp-funky'
-
-    Plug 'kristijanhusak/vim-multiple-cursors'
-
-    Plug 'nathanaelkane/vim-indent-guides'
-
-    Plug 'mhinz/vim-signify'
-
-    Plug 'klen/python-mode', { 'branch': 'develop' }
-
-    Plug 'digitaltoad/vim-jade'
-
-    Plug 'fatih/vim-go'
+    " Plug 'fatih/vim-go'
 
     " Set colornum based on mode
-    Plug 'ntpeters/vim-airline-colornum'
 
-    " Plug 'Shougo/deoplete.nvim'
+    " Plug 'Shougo/deoplete.vim'
     " Plug 'Valloric/YouCompleteMe', {'do': './install.py'}`
 
     " Distraction-free writing in Vim.
-    Plug 'junegunn/goyo.vim'
+    " Plug 'junegunn/goyo.vim'
 
-    Plug 'szw/vim-ctrlspace'
+    " Plug 'junegunn/vim-emoji'
 
-    Plug 'junegunn/vim-emoji'
-
-    Plug 'wesQ3/vim-windowswap'
+    " Plug 'wesQ3/vim-windowswap'
 
     call plug#end()
     filetype plugin indent on
@@ -174,7 +177,7 @@
             " Copy from https://github.com/spf13/spf13-vim/blob/3.0/.vimrc#L1041
             function! InitializeDirectories()
                 let prefix = 'vim'
-                let common_dir = $HOME . '/.nvim/.' . prefix
+                let common_dir = $HOME . '/.vim/.' . prefix
                 let dir_list = {
                             \ 'backup': 'backupdir',
                             \ 'views': 'viewdir',
@@ -262,8 +265,8 @@
     " Keys {
 
         " Wrapped lines goes down/up to next row, rather than next line in file.
-        noremap j gj
-        noremap k gk
+        " noremap j gj
+        " noremap k gk
 
         " Visual Search {
 
@@ -400,12 +403,14 @@
     " }
 
     " Windows, Panes, Tabs and Splits {
-            " Switch Tab
-        map <C-t> :tabnext<CR>
-        map! <C-t> <Esc>:tabnext<CR>
+        " Switch Tab
+        set <F16>=t
+        map <F16> :tabnext<CR>
+        map! t <Esc>:tabnext<CR>
         " Switch Split
-        map <C-s> :wincmd w<CR>
-        map! <C-s> <Esc>:wincmd w<CR>
+        set <F17>=s
+        map <F17> :wincmd w<CR>
+        map! <F17> <Esc>:wincmd w<CR>
     " }
 " }
 
@@ -515,7 +520,7 @@
     nmap <silent> <Leader>ig <Plug>IndentGuidesToggle
     highlight IndentGuidesOdd ctermbg=0
     highlight IndentGuidesEven ctermbg=0
-    highlight NonText ctermfg=8 guifg=8
+    " highlight NonText ctermfg=8 guifg=8
 " }
 
 " EasyMotion {

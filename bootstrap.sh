@@ -125,22 +125,15 @@ vim_install () {
     clone "${dotvim_dir}" "${dotvim_git}" "${dotvim_branch}"
     # Vim
     program_exists "vim"
-    if [ ! -d "${HOME}/.vim/bundle" ]; then
-        mkdir -p "${HOME}/.vim/bundle"
-    fi
+    program_exists "curl"
+    # if [ ! -d "${HOME}/.vim/bundle" ]; then
+    #     mkdir -p "${HOME}/.vim/bundle"
+    # fi
+    info $? "Updated plug.vim"
+    curl -sfLo "${HOME}/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
     local overwrite_all=false backup_all=false skip_all=false
     link_file "${dotvim_dir}/.vimrc" "${HOME}/.vimrc"
-
-    #NVim
-    program_exists "curl"
-    program_exists "nvim"
-    if [ ! -d "${HOME}/.config/nvim/autoload" ]; then
-        mkdir -p "${HOME}/.config/nvim/autoload"
-    fi
-    curl -sfLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    info $? "Updated plug.vim"
-    local overwrite_all=false backup_all=false skip_all=false
-    link_file "${dotvim_dir}/.nvimrc" "${HOME}/.config/nvim/init.vim"
 }
 
 vim_install
