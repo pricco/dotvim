@@ -1,8 +1,6 @@
-
 " .vimrc {
 " vim: set sw=4 ts=4 sts=4 et foldmarker={,} foldlevel=1 foldmethod=marker nospell:
 " }
-
 " Environment {
     silent function! OSX()
         return has('macunix')
@@ -22,29 +20,21 @@
     " Performance?
     " Plug 'metakirby5/codi.vim'
 
+    Plug 'joshdick/onedark.vim'
+    Plug 'itchyny/lightline.vim'
+    Plug 'sheerun/vim-polyglot'
 
-    " Original 'altercation/vim-colors-solarized'
-    Plug 'pricco/vim-colors-solarized'
-
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-
-    Plug 'jby/tmux.vim'
+    " Plug 'jby/tmux.vim'
 
     Plug 'tpope/vim-git'
-
     Plug 'tacahiroy/ctrlp-funky'
-
     Plug 'kristijanhusak/vim-multiple-cursors'
 
     " SLOW?
     " Plug 'nathanaelkane/vim-indent-guides'
 
     Plug 'mhinz/vim-signify'
-
     Plug 'klen/python-mode', { 'branch': 'develop' }
-
-    Plug 'ntpeters/vim-airline-colornum'
 
     Plug 'szw/vim-ctrlspace'
 
@@ -87,8 +77,6 @@
     " https://github.com/Xuyuanp/nerdtree-git-plugin
     Plug 'Xuyuanp/nerdtree-git-plugin'
 
-    " Plug 'edkolev/tmuxline.vim'
-
     " Plug 'scrooloose/syntastic'
     Plug 'benekastah/neomake'
 
@@ -98,6 +86,7 @@
     " Plug 'pangloss/vim-javascript'
     " Plug 'cakebaker/scss-syntax.vim'
     " Plug 'tpope/vim-haml'
+    " Plug 'styled-components/vim-styled-components'
 
 
     " Plug 'digitaltoad/vim-jade'
@@ -137,7 +126,7 @@
     " }
 
     " Behavior {
-        set t_Co=256                        " Number of colors
+        " set t_Co=256                        " Number of colors
         scriptencoding utf-8                " Specify the character encoding used in the script.
         set fileformats=unix,dos,mac        " This gives the end-of-line (<EOL>) formats that will be tried when starting to edit
         let mapleader = "\<Space>"          " To define a mapping which uses the mapleader variable, the special string <Leader> can be used.
@@ -208,28 +197,22 @@
     " }
 
     " UI {
-        if LINUX()
-            set background=dark
-            colorscheme monokai
-        elseif OSX()
-            set background=dark
-            let g:solarized_underline=0
-            let g:solarized_bold=0
-            let g:solarized_italic=0
-            let g:solarized_contrast='normal'
-            let g:solarized_visibility='normal'
-            colorscheme solarized
+        syntax on
+        if has('termguicolors')     " set true colors
+            set t_8f=[38;2;%lu;%lu;%lum
+            set t_8b=[48;2;%lu;%lu;%lum
+            set termguicolors
         endif
+        colorscheme onedark
 
         set nowrap                          " Do not wrap long lines
         set whichwrap=b,s,h,l,<,>,[,]       " Backspace and cursor keys wrap too
         set showbreak=↪                     " String to put at the start of lines that have been wrapped.
         set cursorline                      " Highlight current line
         set tabpagemax=15                   " Only show 15 tabs
-        set showmode                        " Display the current mode (N/A: vim-airline)
         set cmdheight=2                     " Number of screen lines to use for the command-line.
-        set ruler                           " Show the ruler (N/A: vim-airline)
-        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids (N/A: vim-airline)
+        set ruler                           " Show the ruler (N/A: vim-lightline)
+        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids (N/A: vim-lightline)
         set showcmd                         " Show partial commands in status line and Selected characters/lines in visual mode
         set showmatch                       " Show matching brackets/parenthesis
         set linespace=0                     " No extra spaces between rows (only gui)
@@ -241,16 +224,8 @@
         set sidescrolloff=15                " Columns on horizonal scroll
         set splitright                      " Puts new vsplit windows to the right of the current
         set splitbelow                      " Puts new split windows to the bottom of the current
-        if has('statusline')
-            set laststatus=2
-            " Broken down into easily includeable segments (N/A: vim-airline)
-            set statusline=%<%f\                     " Filename
-            set statusline+=%w%h%m%r                 " Options
-            set statusline+=%{fugitive#statusline()} " Git Hotness
-            set statusline+=\ [%{&ff}/%Y]            " Filetype
-            set statusline+=\ [%{getcwd()}]          " Current dir
-            set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-        endif
+        set laststatus=2
+        set noshowmode                      " Display the current mode (N/A: vim-lightline)
         set foldenable                      " Auto fold code
         set wildmenu                        " Show list instead of just completing
         set wildmode=list:longest,full      " Command <Tab> completion, list matches, then longest common part, then all.
@@ -414,13 +389,11 @@
     " }
 " }
 
-" airline {
+" lightline {
     set laststatus=2
-    let g:airline_theme = 'solarized'
-    let g:airline_powerline_fonts = 1
-    let g:airline#extensions#tmuxline#enabled = 0
-    let g:airline#extensions#tabline#enabled = 0
-    let g:airline#extensions#bufferline#enabled = 0
+    let g:lightline = {
+      \ 'colorscheme': 'onedark',
+    \ }
 " }
 
 " CtrlP {
@@ -592,19 +565,6 @@
 
 " Dash {
     nmap <silent> <leader>d <Plug>DashSearch
-" }
-
-" Tmuxline {
-    " .tmux.monokai.conf configuration
-    let g:tmuxline_theme = 'solarized'
-    let g:tmuxline_preset = {
-          \ 'a'    : '#S',
-          \ 'win'  : '#W',
-          \ 'cwin' : '#W',
-          \ 'x'    : '#{battery_icon} #{battery_percentage}',
-          \ 'y'    : '%Y-%m-%d %H:%M',
-          \ 'z'    : '#H '
-          \ }
 " }
 
 " Deoplete {
