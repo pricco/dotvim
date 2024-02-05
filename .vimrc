@@ -34,11 +34,11 @@
     " Plug 'nathanaelkane/vim-indent-guides'
 
     Plug 'mhinz/vim-signify'
-    Plug 'klen/python-mode', { 'branch': 'develop' }
+    " Plug 'klen/python-mode', { 'branch': 'develop' }
 
     Plug 'szw/vim-ctrlspace'
 
-    Plug 'elixir-lang/vim-elixir'
+    " Plug 'elixir-lang/vim-elixir'
 
     " Performance?
     " Plug 'dhruvasagar/vim-table-mode'
@@ -152,7 +152,8 @@
         set clipboard=
         set nojoinspaces                    " Prevents inserting two spaces after punctuation on a join (J)
         syntax enable
-        set foldlevelstart=0
+        set nofoldenable
+        " set foldlevelstart=0
 
         " Backups
         set backup                          " Backups are nice ...
@@ -226,7 +227,6 @@
         set splitbelow                      " Puts new split windows to the bottom of the current
         set laststatus=2
         set noshowmode                      " Display the current mode (N/A: vim-lightline)
-        set foldenable                      " Auto fold code
         set wildmenu                        " Show list instead of just completing
         set wildmode=list:longest,full      " Command <Tab> completion, list matches, then longest common part, then all.
         set list                            " Useful to see the difference between tabs and spaces and for trailing blanks.
@@ -534,15 +534,15 @@
 " }
 
 " Fugitive {
-    nnoremap <silent> <leader>gs :Gstatus<CR>
-    nnoremap <silent> <leader>gd :Gdiff<CR>
-    nnoremap <silent> <leader>gc :Gcommit<CR>
-    nnoremap <silent> <leader>gb :Gblame<CR>
-    nnoremap <silent> <leader>gl :Glog<CR>
+    nnoremap <silent> <leader>gs :Git status<CR>
+    nnoremap <silent> <leader>gd :Git diff<CR>
+    nnoremap <silent> <leader>gc :Git commit<CR>
+    nnoremap <silent> <leader>gb :Git blame<CR>
+    nnoremap <silent> <leader>gl :Git log<CR>
     nnoremap <silent> <leader>gp :Git push<CR>
-    nnoremap <silent> <leader>gr :Gread<CR>
-    nnoremap <silent> <leader>gw :Gwrite<CR>
-    nnoremap <silent> <leader>ge :Gedit<CR>
+    nnoremap <silent> <leader>gr :Git read<CR>
+    nnoremap <silent> <leader>gw :Git write<CR>
+    nnoremap <silent> <leader>ge :Git edit<CR>
     " Mnemonic _i_nteractive
     nnoremap <silent> <leader>gi :Git add -p %<CR>
     nnoremap <silent> <leader>gg :SignifyToggle<CR>
